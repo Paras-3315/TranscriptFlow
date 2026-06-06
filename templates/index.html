@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranscriptFlow – YouTube Transcript & AI Summarizer</title>
+    <meta name="description" content="Extract YouTube transcripts instantly. Get free captions or use AI to transcribe any video. Summarize, copy, and download in one click.">
+    <meta name="keywords" content="youtube transcript, youtube subtitles, video transcription, AI summarizer, caption extractor">
+    <meta property="og:title" content="TranscriptFlow – YouTube Transcript Extractor">
+    <meta property="og:description" content="Free YouTube transcript extractor with AI transcription and summarization.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161e;
+            --surface2: #1a1e29;
+            --border: #252836;
+            --accent: #f0c040;
+            --accent2: #e05a5a;
+            --text: #e8eaf0;
+            --text-muted: #6b7280;
+            --text-soft: #9ca3af;
+            --green: #34d399;
+            --radius: 14px;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 16px 80px;
+        }
+
+        /* ── HEADER ── */
+        header {
+            padding: 24px 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--accent); }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: var(--accent); }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-soft);
+        }
+
+        /* ── AD BANNER — fully responsive ── */
+        .ad-banner {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 24px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .ad-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* Force responsive AdSense units to fill container */
+        .ad-banner ins,
+        .ad-mid ins {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            text-align: center;
+            padding: 20px 0 28px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-head);
+            font-size: clamp(28px, 7vw, 52px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--text-soft);
+            font-weight: 300;
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ── FEATURE PILLS ── */
+        .pills {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .pill {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text-soft);
+        }
+        .pill.active { border-color: var(--accent); color: var(--accent); background: rgba(240,192,64,0.07); }
+
+        /* ── MAIN CARD ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        /* ── URL INPUT ── */
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .input-wrap {
+            flex: 1;
+            position: relative;
+            min-width: 0; /* prevent flex overflow */
+        }
+
+        .yt-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 13px 12px 13px 42px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            /* prevent zoom on iOS */
+            font-size: max(16px, 14px);
+        }
+        input[type="text"]:focus { border-color: var(--accent); }
+        input[type="text"]::placeholder { color: var(--text-muted); }
+
+        .btn {
+            padding: 13px 18px;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font-head);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-primary { background: var(--accent); color: #000; }
+        .btn-primary:hover { background: #ffd053; transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .btn-ai {
+            background: linear-gradient(135deg, #7c3aed, #db2777);
+            color: #fff;
+            width: 100%;
+            padding: 15px;
+            font-size: 15px;
+            border-radius: 10px;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-ai:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-ai:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* ── ERROR ── */
+        .error-box {
+            display: none;
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: rgba(224, 90, 90, 0.1);
+            border: 1px solid rgba(224, 90, 90, 0.3);
+            border-radius: 8px;
+            color: #f87171;
+            font-size: 14px;
+        }
+
+        /* ── PAYWALL ── */
+        .paywall { display: none; margin-top: 18px; }
+
+        .paywall-inner {
+            background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(219,39,119,0.12));
+            border: 1px solid rgba(124,58,237,0.4);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .paywall-inner h4 {
+            font-family: var(--font-head);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .paywall-inner p {
+            font-size: 13px;
+            color: var(--text-soft);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        /* ── OUTPUT SECTION ── */
+        #output-section { display: none; }
+
+        .output-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .output-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            flex: 1;
+            min-width: 0;
+        }
+        .output-meta strong { color: var(--green); font-weight: 600; }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .btn-sm {
+            padding: 7px 12px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: var(--surface2);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        .btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-sm.copy-done { border-color: var(--green); color: var(--green); }
+        .btn-sm.download { border-color: #60a5fa; color: #60a5fa; }
+
+        textarea {
+            width: 100%;
+            height: 240px;
+            padding: 14px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 1.7;
+            resize: vertical;
+            outline: none;
+        }
+
+        /* ── SUMMARIZE ── */
+        .summarize-section {
+            margin-top: 16px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+
+        .summarize-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .summarize-header h3 {
+            font-family: var(--font-head);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .style-tabs { display: flex; gap: 5px; }
+
+        .style-tab {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all 0.15s;
+        }
+        .style-tab.active {
+            background: rgba(240,192,64,0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-summarize {
+            background: rgba(240,192,64,0.12);
+            border: 1px solid rgba(240,192,64,0.3);
+            color: var(--accent);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: var(--font-head);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+        .btn-summarize:hover { background: rgba(240,192,64,0.2); }
+        .btn-summarize:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .summary-output {
+            display: none;
+            background: rgba(52, 211, 153, 0.05);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .summary-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #summaryText {
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--text-soft);
+            white-space: pre-wrap;
+        }
+
+        /* ── AD MID ── */
+        .ad-mid {
+            margin: 18px 0;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* ── HOW IT WORKS ── */
+        .how-section { margin-top: 36px; }
+
+        .section-title {
+            font-family: var(--font-head);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        .section-title span { color: var(--accent); }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .step {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+        }
+        .step-num {
+            font-family: var(--font-head);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+            opacity: 0.4;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .step h4 { font-family: var(--font-head); font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+        .step p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+        /* ── FAQ ── */
+        .faq-section { margin-top: 36px; }
+
+        .faq-item { border-bottom: 1px solid var(--border); padding: 14px 0; }
+
+        .faq-q {
+            font-family: var(--font-head);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            gap: 12px;
+        }
+        .faq-q::after {
+            content: '+';
+            font-size: 20px;
+            color: var(--accent);
+            font-weight: 400;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .faq-item.open .faq-q::after { transform: rotate(45deg); }
+
+        .faq-a {
+            display: none;
+            font-size: 13px;
+            color: var(--text-soft);
+            line-height: 1.65;
+            padding-top: 10px;
+        }
+        .faq-item.open .faq-a { display: block; }
+
+        /* ── FOOTER ── */
+        footer {
+            margin-top: 48px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        footer p { font-size: 12px; color: var(--text-muted); }
+        footer a { color: var(--text-muted); text-decoration: none; font-size: 12px; }
+        footer a:hover { color: var(--accent); }
+        .footer-links { display: flex; gap: 14px; flex-wrap: wrap; }
+
+        /* ── SPINNER ── */
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+        }
+        .spinner.dark { border-color: rgba(0,0,0,0.2); border-top-color: #000; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── CHAR COUNT ── */
+        .char-count { font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 5px; }
+
+        /* ── COOKIE BANNER ── */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: #1a1e29;
+            border-top: 1px solid #252836;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #cookie-banner.visible { transform: translateY(0); }
+        .cookie-text {
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: var(--text-soft);
+            line-height: 1.5;
+            flex: 1;
+            min-width: 200px;
+        }
+        .cookie-text a { color: var(--accent); text-decoration: none; }
+        .cookie-text a:hover { text-decoration: underline; }
+        .cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
+        .btn-cookie-accept {
+            padding: 9px 18px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-head);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-cookie-accept:hover { background: #ffd053; }
+        .btn-cookie-decline {
+            padding: 9px 14px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-cookie-decline:hover { border-color: var(--text-soft); color: var(--text-soft); }
+
+        /* ── FADE IN ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .card, .hero { animation: fadeUp 0.45s ease both; }
+        .card { animation-delay: 0.1s; }
+
+        /* ════════════════════════════
+           MOBILE BREAKPOINTS
+        ════════════════════════════ */
+
+        /* Tablets and below */
+        @media (max-width: 640px) {
+            .page-wrap { padding: 0 14px 80px; }
+
+            header { padding: 18px 0 14px; }
+
+            /* Stack input + button vertically */
+            .input-row { flex-direction: column; }
+            .btn-primary { width: 100%; text-align: center; justify-content: center; }
+
+            /* Output toolbar: meta on top, buttons below */
+            .output-toolbar { flex-direction: column; align-items: flex-start; }
+            .toolbar-actions { width: 100%; }
+            .btn-sm { flex: 1; justify-content: center; }
+
+            /* Summarize header wraps nicely */
+            .summarize-header { flex-direction: column; align-items: flex-start; }
+            .style-tabs { width: 100%; }
+            .style-tab { flex: 1; text-align: center; }
+
+            /* Steps: 2 columns on tablet */
+            .steps { grid-template-columns: 1fr 1fr; }
+
+            /* Footer stacks */
+            footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .footer-links { gap: 12px; }
+
+            /* Cookie banner stacks on small screens */
+            #cookie-banner { padding: 12px 14px; }
+            .cookie-text { font-size: 12px; }
+        }
+
+        /* Phones only */
+        @media (max-width: 400px) {
+            .hero h1 { letter-spacing: -1px; }
+            .badge { display: none; } /* hide badge on very small screens to avoid header crowding */
+            .steps { grid-template-columns: 1fr; }
+            .pills { gap: 5px; }
+            .pill { font-size: 10px; padding: 3px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+    <header>
+        <div class="logo">Transcript<span>Flow</span></div>
+        <div class="header-nav">
+            <a href="/about" class="nav-link">About</a>
+            <span class="badge">Free Tool</span>
+        </div>
+    </header>
+
+    <!-- ── AD SLOT: TOP BANNER — responsive ── -->
+    <div class="ad-banner">
+        <span class="ad-label">Advertisement</span>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+        <h1>Extract any YouTube<br><em>transcript instantly</em></h1>
+        <p>Free caption download. AI-powered transcription for videos without subtitles. Summarize in one click.</p>
+        <div class="pills">
+            <span class="pill active">✓ Free Captions</span>
+            <span class="pill active">✓ AI Transcription</span>
+            <span class="pill active">✓ AI Summarizer</span>
+            <span class="pill active">✓ Download .txt</span>
+            <span class="pill">10+ Languages</span>
+        </div>
+    </section>
+
+    <!-- ── MAIN CARD ── -->
+    <div class="card">
+        <div class="input-row">
+            <div class="input-wrap">
+                <svg class="yt-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#FF0000"/>
+                    <path d="M9.75 15.02l5.75-3.02-5.75-3.02v6.04z" fill="#fff"/>
+                </svg>
+                <input type="text" id="videoUrl" placeholder="Paste YouTube URL here…" autocomplete="off">
+            </div>
+            <button class="btn btn-primary" onclick="fetchTranscript(false)" id="submitBtn">
+                Extract
+            </button>
+        </div>
+
+        <div id="errorBox" class="error-box"></div>
+
+        <div id="premium-paywall" class="paywall">
+            <div class="paywall-inner">
+                <h4>🎙 No captions found for this video</h4>
+                <p>Our AI engine can listen to the audio track and generate a full transcript for you.</p>
+                <p style="font-size:12px; color: #a78bfa; margin-bottom: 12px;">Uses 1 AI credit &nbsp;·&nbsp; Works on any language</p>
+                <button class="btn btn-ai" id="aiBtn" onclick="fetchTranscript(true)">
+                    ⚡ Transcribe with Premium AI
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── OUTPUT SECTION ── -->
+    <div id="output-section">
+        <div class="card">
+            <div class="output-toolbar">
+                <div class="output-meta" id="outputMeta">Transcript loaded</div>
+                <div class="toolbar-actions">
+                    <button class="btn-sm" id="copyBtn" onclick="copyText()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy
+                    </button>
+                    <button class="btn-sm download" onclick="downloadTxt()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download .txt
+                    </button>
+                </div>
+            </div>
+
+            <textarea id="transcriptOutput" readonly></textarea>
+            <div class="char-count" id="charCount"></div>
+
+            <!-- ── AD SLOT: IN-CONTENT — responsive ── -->
+            <div class="ad-mid">
+                <span class="ad-label">Advertisement</span>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="0987654321"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <!-- ── SUMMARIZE ── -->
+            <div class="summarize-section">
+                <div class="summarize-header">
+                    <h3>✨ AI Summary</h3>
+                    <div class="style-tabs">
+                        <button class="style-tab active" data-style="brief" onclick="setStyle(this)">Brief</button>
+                        <button class="style-tab" data-style="detailed" onclick="setStyle(this)">Detailed</button>
+                        <button class="style-tab" data-style="bullets" onclick="setStyle(this)">Bullets</button>
+                    </div>
+                </div>
+                <button class="btn-summarize" id="summarizeBtn" onclick="summarize()">
+                    <span id="summarizeLabel">✦ Generate AI Summary</span>
+                </button>
+                <div class="summary-output" id="summaryOutput">
+                    <div class="summary-label">
+                        <span>AI Summary</span>
+                        <button class="btn-sm" onclick="copySummary()" style="padding:4px 10px; font-size:11px;">Copy</button>
+                    </div>
+                    <div id="summaryText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── HOW IT WORKS ── -->
+    <section class="how-section">
+        <h2 class="section-title">How it <span>works</span></h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">01</div>
+                <h4>Paste URL</h4>
+                <p>Copy any YouTube video link and paste it in the box above.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">02</div>
+                <h4>Extract</h4>
+                <p>We check for free captions first. No captions? AI transcribes from audio.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">03</div>
+                <h4>Summarize</h4>
+                <p>Use our AI Summarizer to get key points in seconds — brief, detailed, or bullets.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">04</div>
+                <h4>Export</h4>
+                <p>Copy to clipboard or download as a clean .txt file.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── AD SLOT: BOTTOM BANNER — responsive ── -->
+    <div class="ad-banner" style="margin-top: 24px;">
+        <span class="ad-label">Advertisement</span>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1122334455"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- ── FAQ ── -->
+    <section class="faq-section" id="faq">
+        <h2 class="section-title">FAQ</h2>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Is this tool free?</div>
+            <div class="faq-a">Yes! Extracting existing captions from YouTube videos is completely free. AI transcription for videos without captions uses one credit per video.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">What languages are supported?</div>
+            <div class="faq-a">Caption extraction supports any language available on YouTube. AI transcription auto-detects the spoken language and produces a transcript.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Why can't I get a transcript for some videos?</div>
+            <div class="faq-a">Some videos have captions disabled by the creator, or are private/age-restricted. In those cases, use our AI Transcription option.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">How does AI Summarization work?</div>
+            <div class="faq-a">Once your transcript is extracted, click "Generate AI Summary." Our AI reads the full transcript and returns a concise, accurate summary in your chosen format.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Can I download the transcript?</div>
+            <div class="faq-a">Yes! Click the "Download .txt" button to save the full transcript as a plain text file to your device.</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 TranscriptFlow · Free YouTube Transcript Extractor</p>
+        <div class="footer-links">
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </footer>
+
+</div>
+
+<!-- ── COOKIE BANNER ── -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+    <p class="cookie-text">
+        🍪 We use cookies to serve relevant ads via Google AdSense and to understand site usage.
+        By clicking <strong>Accept</strong>, you agree to our <a href="/privacy">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+        <button class="btn-cookie-decline" onclick="cookieChoice(false)">Decline</button>
+        <button class="btn-cookie-accept" onclick="cookieChoice(true)">Accept</button>
+    </div>
+</div>
+
+<script>
+    let currentTranscript = '';
+    let currentSummaryStyle = 'brief';
+
+    async function fetchTranscript(useAi = false) {
+        const urlInput = document.getElementById('videoUrl').value.trim();
+        const submitBtn = document.getElementById('submitBtn');
+        const aiBtn = document.getElementById('aiBtn');
+        const errorBox = document.getElementById('errorBox');
+        const paywall = document.getElementById('premium-paywall');
+        const outputSection = document.getElementById('output-section');
+
+        errorBox.style.display = 'none';
+
+        if (!useAi) {
+            outputSection.style.display = 'none';
+            paywall.style.display = 'none';
+            submitBtn.innerHTML = '<span class="spinner dark"></span>';
+            submitBtn.disabled = true;
+        } else {
+            aiBtn.innerHTML = '<span class="spinner"></span> AI is transcribing…';
+            aiBtn.disabled = true;
+        }
+
+        if (!urlInput) {
+            showError('Please enter a YouTube URL.');
+            resetButtons();
+            return;
+        }
+
+        try {
+            const res = await fetch('/get-transcript', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: urlInput, use_ai: useAi })
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+
+            if (data.status === 'no_captions_found') {
+                paywall.style.display = 'block';
+                return;
+            }
+
+            currentTranscript = data.transcript;
+            document.getElementById('transcriptOutput').value = data.transcript;
+            document.getElementById('outputMeta').innerHTML =
+                `<strong>${data.mode}</strong> &nbsp;·&nbsp; Language: ${data.language} &nbsp;·&nbsp; ${data.transcript.length.toLocaleString()} chars`;
+            document.getElementById('charCount').textContent =
+                `${data.transcript.split(' ').length.toLocaleString()} words · ${data.transcript.length.toLocaleString()} characters`;
+
+            document.getElementById('summaryOutput').style.display = 'none';
+            document.getElementById('summaryText').textContent = '';
+
+            outputSection.style.display = 'block';
+            paywall.style.display = 'none';
+            outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        } catch (err) {
+            showError(err.message);
+        } finally {
+            resetButtons();
+        }
+    }
+
+    function resetButtons() {
+        const submitBtn = document.getElementById('submitBtn');
+        const aiBtn = document.getElementById('aiBtn');
+        submitBtn.innerHTML = 'Extract';
+        submitBtn.disabled = false;
+        aiBtn.innerHTML = '⚡ Transcribe with Premium AI';
+        aiBtn.disabled = false;
+    }
+
+    function showError(msg) {
+        const errorBox = document.getElementById('errorBox');
+        errorBox.textContent = msg;
+        errorBox.style.display = 'block';
+    }
+
+    function copyText() {
+        const ta = document.getElementById('transcriptOutput');
+        ta.select();
+        document.execCommand('copy');
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('copy-done');
+        setTimeout(() => {
+            btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
+            btn.classList.remove('copy-done');
+        }, 2000);
+    }
+
+    async function downloadTxt() {
+        if (!currentTranscript) return;
+        const url = document.getElementById('videoUrl').value.trim();
+        try {
+            const res = await fetch('/download', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ transcript: currentTranscript, title: url })
+            });
+            const blob = await res.blob();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'transcript.txt';
+            a.click();
+        } catch (e) {
+            const blob = new Blob([currentTranscript], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'transcript.txt';
+            a.click();
+        }
+    }
+
+    function setStyle(el) {
+        document.querySelectorAll('.style-tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+        currentSummaryStyle = el.dataset.style;
+    }
+
+    async function summarize() {
+        if (!currentTranscript) return;
+        const btn = document.getElementById('summarizeBtn');
+        const label = document.getElementById('summarizeLabel');
+        const output = document.getElementById('summaryOutput');
+        const textEl = document.getElementById('summaryText');
+
+        label.innerHTML = '<span class="spinner dark"></span> Summarizing…';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/summarize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ transcript: currentTranscript, style: currentSummaryStyle })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            textEl.textContent = data.summary;
+            output.style.display = 'block';
+        } catch (e) {
+            alert('Summarization failed: ' + e.message);
+        } finally {
+            label.textContent = '✦ Generate AI Summary';
+            btn.disabled = false;
+        }
+    }
+
+    function copySummary() {
+        const text = document.getElementById('summaryText').textContent;
+        navigator.clipboard.writeText(text).catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+        });
+    }
+
+    function toggleFaq(el) {
+        el.parentElement.classList.toggle('open');
+    }
+
+    document.getElementById('videoUrl').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') fetchTranscript(false);
+    });
+
+    // ── Cookie Banner ──
+    (function() {
+        if (localStorage.getItem('cookie_consent') === null) {
+            setTimeout(function() {
+                document.getElementById('cookie-banner').classList.add('visible');
+            }, 800);
+        }
+    })();
+
+    function cookieChoice(accepted) {
+        localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+        var banner = document.getElementById('cookie-banner');
+        banner.style.transition = 'transform 0.25s ease';
+        banner.style.transform = 'translateY(100%)';
+        if (!accepted) {
+            (window.adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = 1;
+        }
+    }
+</script>
+
+</body>
+</html>

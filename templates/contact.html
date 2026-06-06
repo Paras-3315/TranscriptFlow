@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us – TranscriptFlow</title>
+    <meta name="description" content="Get in touch with the TranscriptFlow team. Report issues, ask questions, or send feedback.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161e;
+            --surface2: #1a1e29;
+            --border: #252836;
+            --accent: #f0c040;
+            --text: #e8eaf0;
+            --text-muted: #6b7280;
+            --text-soft: #9ca3af;
+            --green: #34d399;
+            --radius: 14px;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+        header {
+            padding: 32px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: var(--font-head);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo span { color: var(--accent); }
+        .back-link {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent); }
+        .ad-banner {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 28px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ad-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .page-title {
+            font-family: var(--font-head);
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+        .page-title span { color: var(--accent); }
+        .page-subtitle {
+            font-size: 15px;
+            color: var(--text-soft);
+            margin-bottom: 36px;
+            font-weight: 300;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 640px) {
+            .contact-layout { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus { border-color: var(--accent); }
+        input::placeholder,
+        textarea::placeholder { color: var(--text-muted); }
+        select option { background: var(--surface2); }
+        textarea { height: 130px; resize: vertical; line-height: 1.6; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font-head);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 4px;
+        }
+        .btn-submit:hover { background: #ffd053; transform: translateY(-1px); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .success-box {
+            display: none;
+            background: rgba(52,211,153,0.08);
+            border: 1px solid rgba(52,211,153,0.25);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 14px;
+            color: var(--green);
+            text-align: center;
+            margin-top: 16px;
+        }
+        .error-box {
+            display: none;
+            background: rgba(224,90,90,0.08);
+            border: 1px solid rgba(224,90,90,0.25);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #f87171;
+            margin-top: 12px;
+        }
+
+        /* Info sidebar */
+        .info-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+        .info-card h3 {
+            font-family: var(--font-head);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        .info-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            align-items: flex-start;
+        }
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(240,192,64,0.1);
+            border: 1px solid rgba(240,192,64,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .info-text p {
+            font-size: 13px;
+            color: var(--text-soft);
+            line-height: 1.55;
+        }
+        .info-text strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 18px 0;
+        }
+
+        .faq-link {
+            font-size: 13px;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+        .faq-link a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .faq-link a:hover { text-decoration: underline; }
+
+        /* Spinner */
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        footer {
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        footer p { font-size: 12px; color: var(--text-muted); }
+        footer a { color: var(--text-muted); text-decoration: none; font-size: 12px; }
+        footer a:hover { color: var(--accent); }
+        .footer-links { display: flex; gap: 16px; }
+        /* ── COOKIE BANNER ── */
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #1a1e29;
+    border-top: 1px solid #252836;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#cookie-banner.visible { transform: translateY(0); }
+.cookie-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.55;
+    flex: 1;
+    min-width: 200px;
+}
+.cookie-text a { color: var(--accent); text-decoration: none; }
+.cookie-text a:hover { text-decoration: underline; }
+.cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-cookie-accept {
+    padding: 9px 20px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-cookie-accept:hover { background: #ffd053; }
+.btn-cookie-decline {
+    padding: 9px 16px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-cookie-decline:hover { border-color: var(--text-soft); color: var(--text-soft); }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <header>
+        <a href="/" class="logo">Transcript<span>Flow</span></a>
+        <a href="/" class="back-link">← Back to Tool</a>
+    </header>
+
+    <!-- Ad Slot: Top Banner -->
+    <div class="ad-banner">
+        <div>
+            <span class="ad-label">Advertisement</span>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <h1 class="page-title">Get in <span>Touch</span></h1>
+    <p class="page-subtitle">Questions, feedback, or issues? We'd love to hear from you.</p>
+
+    <div class="contact-layout">
+
+        <!-- Contact Form -->
+        <div class="card">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" placeholder="e.g. Alex Johnson" autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <select id="subject">
+                    <option value="">Select a topic…</option>
+                    <option value="bug">🐛 Bug Report</option>
+                    <option value="feature">💡 Feature Request</option>
+                    <option value="transcript">📄 Transcript Issue</option>
+                    <option value="ai">🤖 AI Transcription Issue</option>
+                    <option value="billing">💳 Billing / Credits</option>
+                    <option value="other">💬 Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Describe your issue or question in detail. If reporting a bug, please include the YouTube URL you were trying to use."></textarea>
+            </div>
+            <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+                Send Message
+            </button>
+            <div class="success-box" id="successBox">
+                ✓ Message sent! We'll get back to you within 48 hours.
+            </div>
+            <div class="error-box" id="errorBox"></div>
+        </div>
+
+        <!-- Info Sidebar -->
+        <div>
+            <div class="info-card">
+                <h3>Contact Info</h3>
+                <div class="info-item">
+                    <div class="info-icon">📬</div>
+                    <div class="info-text">
+                        <strong>Email</strong>
+                        <p>support@transcriptflow.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">⏱</div>
+                    <div class="info-text">
+                        <strong>Response Time</strong>
+                        <p>We typically reply within 24–48 hours on business days.</p>
+                    </div>
+                </div>
+                <div class="info-item" style="margin-bottom:0">
+                    <div class="info-icon">🌍</div>
+                    <div class="info-text">
+                        <strong>Availability</strong>
+                        <p>Support available Monday – Friday.</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <p class="faq-link">
+                    Have a common question? Check our <a href="/#faq">FAQ section</a> on the home page — you may find an instant answer there.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2025 TranscriptFlow · Free YouTube Transcript Extractor</p>
+        <div class="footer-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    async function submitForm() {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value.trim();
+        const btn = document.getElementById('submitBtn');
+        const successBox = document.getElementById('successBox');
+        const errorBox = document.getElementById('errorBox');
+
+        errorBox.style.display = 'none';
+        successBox.style.display = 'none';
+
+        if (!name || !email || !message) {
+            errorBox.textContent = 'Please fill in all required fields.';
+            errorBox.style.display = 'block';
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            errorBox.textContent = 'Please enter a valid email address.';
+            errorBox.style.display = 'block';
+            return;
+        }
+
+        btn.innerHTML = '<span class="spinner"></span> Sending…';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, subject, message })
+            });
+            const data = await res.json();
+
+            if (!res.ok) throw new Error(data.error || 'Failed to send message.');
+
+            successBox.style.display = 'block';
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('subject').value = '';
+            document.getElementById('message').value = '';
+        } catch (err) {
+            errorBox.textContent = err.message;
+            errorBox.style.display = 'block';
+        } finally {
+            btn.innerHTML = 'Send Message';
+            btn.disabled = false;
+        }
+    }
+</script>
+<div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+    <p class="cookie-text">
+        🍪 We use cookies to serve relevant ads via Google AdSense and to understand site usage.
+        By clicking <strong>Accept</strong>, you agree to our <a href="/privacy">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+        <button class="btn-cookie-decline" onclick="cookieChoice(false)">Decline</button>
+        <button class="btn-cookie-accept" onclick="cookieChoice(true)">Accept</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    if (localStorage.getItem('cookie_consent') === null) {
+        setTimeout(function() {
+            document.getElementById('cookie-banner').classList.add('visible');
+        }, 800);
+    }
+})();
+
+function cookieChoice(accepted) {
+    localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+    var banner = document.getElementById('cookie-banner');
+    banner.style.transition = 'transform 0.25s ease';
+    banner.style.transform = 'translateY(100%)';
+    if (!accepted) {
+        (window.adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = 1;
+    }
+}
+</script>
+</body>
+</html>

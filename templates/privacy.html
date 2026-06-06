@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy – TranscriptFlow</title>
+    <meta name="description" content="TranscriptFlow Privacy Policy. Learn how we collect, use, and protect your data.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161e;
+            --surface2: #1a1e29;
+            --border: #252836;
+            --accent: #f0c040;
+            --text: #e8eaf0;
+            --text-muted: #6b7280;
+            --text-soft: #9ca3af;
+            --green: #34d399;
+            --radius: 14px;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+        header {
+            padding: 32px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: var(--font-head);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo span { color: var(--accent); }
+        .back-link {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        /* Ad banner */
+        .ad-banner {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 28px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ad-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .page-title {
+            font-family: var(--font-head);
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+        .page-title span { color: var(--accent); }
+        .last-updated {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+        }
+        .prose-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-bottom: 16px;
+        }
+        .prose-card h2 {
+            font-family: var(--font-head);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .prose-card h2::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        .prose-card p {
+            font-size: 14px;
+            color: var(--text-soft);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+        .prose-card p:last-child { margin-bottom: 0; }
+        .prose-card ul {
+            list-style: none;
+            margin-top: 8px;
+        }
+        .prose-card ul li {
+            font-size: 14px;
+            color: var(--text-soft);
+            line-height: 1.65;
+            padding: 4px 0 4px 18px;
+            position: relative;
+        }
+        .prose-card ul li::before {
+            content: '·';
+            position: absolute;
+            left: 4px;
+            color: var(--accent);
+            font-size: 18px;
+            line-height: 1.4;
+        }
+        .contact-highlight {
+            background: rgba(240,192,64,0.07);
+            border: 1px solid rgba(240,192,64,0.2);
+            border-radius: 10px;
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--text-soft);
+            margin-top: 12px;
+        }
+        .contact-highlight a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        footer {
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        footer p { font-size: 12px; color: var(--text-muted); }
+        footer a { color: var(--text-muted); text-decoration: none; font-size: 12px; }
+        footer a:hover { color: var(--accent); }
+        .footer-links { display: flex; gap: 16px; }
+        /* ── COOKIE BANNER ── */
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #1a1e29;
+    border-top: 1px solid #252836;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#cookie-banner.visible { transform: translateY(0); }
+.cookie-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.55;
+    flex: 1;
+    min-width: 200px;
+}
+.cookie-text a { color: var(--accent); text-decoration: none; }
+.cookie-text a:hover { text-decoration: underline; }
+.cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-cookie-accept {
+    padding: 9px 20px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-cookie-accept:hover { background: #ffd053; }
+.btn-cookie-decline {
+    padding: 9px 16px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-cookie-decline:hover { border-color: var(--text-soft); color: var(--text-soft); }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <header>
+        <a href="/" class="logo">Transcript<span>Flow</span></a>
+        <a href="/" class="back-link">← Back to Tool</a>
+    </header>
+
+    <!-- Ad Slot: Top Banner -->
+    <div class="ad-banner">
+        <div>
+            <span class="ad-label">Advertisement</span>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <h1 class="page-title">Privacy <span>Policy</span></h1>
+    <p class="last-updated">Last updated: June 1, 2025</p>
+
+    <div class="prose-card">
+        <h2>Overview</h2>
+        <p>TranscriptFlow ("we", "us", or "our") operates the TranscriptFlow website and service. This Privacy Policy explains how we collect, use, and safeguard information when you use our free YouTube transcript extraction and AI summarization tool.</p>
+        <p>By using TranscriptFlow, you agree to the collection and use of information in accordance with this policy.</p>
+    </div>
+
+    <div class="prose-card">
+        <h2>Information We Collect</h2>
+        <p>We collect minimal data necessary to provide our service:</p>
+        <ul>
+            <li><strong>YouTube URLs</strong> — You submit URLs to extract transcripts. We process these to fetch captions or audio, but do not permanently store them.</li>
+            <li><strong>Usage Data</strong> — Anonymous analytics such as page views, browser type, and general geographic region, collected via standard web analytics tools (e.g. Google Analytics).</li>
+            <li><strong>Contact Information</strong> — If you reach out via our contact form, we collect your name and email address solely to respond to your inquiry.</li>
+            <li><strong>Cookies</strong> — We use cookies to serve relevant advertising through Google AdSense. You may opt out via your browser settings.</li>
+        </ul>
+    </div>
+
+    <div class="prose-card">
+        <h2>How We Use Your Information</h2>
+        <ul>
+            <li>To provide, operate, and improve the TranscriptFlow service.</li>
+            <li>To respond to your support or contact requests.</li>
+            <li>To serve relevant ads via Google AdSense (subject to Google's own privacy policy).</li>
+            <li>To monitor usage patterns and fix technical issues.</li>
+        </ul>
+        <p>We do not sell, trade, or rent your personal information to third parties.</p>
+    </div>
+
+    <div class="prose-card">
+        <h2>Third-Party Services</h2>
+        <p>TranscriptFlow integrates with the following third-party services, each governed by their own privacy policies:</p>
+        <ul>
+            <li><strong>Google AdSense</strong> — Advertising. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color: var(--accent);">Google's Privacy Policy</a>.</li>
+            <li><strong>Deepgram</strong> — AI audio transcription for videos without captions.</li>
+            <li><strong>Google Gemini</strong> — AI summarization of transcripts.</li>
+            <li><strong>YouTube Transcript API</strong> — Fetching publicly available captions from YouTube.</li>
+        </ul>
+        <p>When you use AI Transcription, your video's audio is temporarily processed by Deepgram and is not retained by us after the transcript is returned.</p>
+    </div>
+
+    <div class="prose-card">
+        <h2>Data Retention</h2>
+        <p>We do not store transcripts, summaries, or YouTube URLs on our servers beyond the duration of your active session. Contact form submissions are retained only as long as needed to address your inquiry.</p>
+    </div>
+
+    <div class="prose-card">
+        <h2>Children's Privacy</h2>
+        <p>TranscriptFlow is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has submitted information to us, please contact us and we will delete it promptly.</p>
+    </div>
+
+    <div class="prose-card">
+        <h2>Your Rights</h2>
+        <p>Depending on your location, you may have rights including access to, correction of, or deletion of your personal data. To exercise any of these rights, please contact us.</p>
+        <div class="contact-highlight">
+            📬 Privacy questions? Email us at <a href="mailto:privacy@transcriptflow.com">privacy@transcriptflow.com</a> or use our <a href="/contact">Contact page</a>.
+        </div>
+    </div>
+
+    <div class="prose-card">
+        <h2>Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date. We encourage you to review this page periodically.</p>
+    </div>
+
+    <footer>
+        <p>© 2025 TranscriptFlow · Free YouTube Transcript Extractor</p>
+        <div class="footer-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </footer>
+
+</div>
+<div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+    <p class="cookie-text">
+        🍪 We use cookies to serve relevant ads via Google AdSense and to understand site usage.
+        By clicking <strong>Accept</strong>, you agree to our <a href="/privacy">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+        <button class="btn-cookie-decline" onclick="cookieChoice(false)">Decline</button>
+        <button class="btn-cookie-accept" onclick="cookieChoice(true)">Accept</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    if (localStorage.getItem('cookie_consent') === null) {
+        setTimeout(function() {
+            document.getElementById('cookie-banner').classList.add('visible');
+        }, 800);
+    }
+})();
+
+function cookieChoice(accepted) {
+    localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+    var banner = document.getElementById('cookie-banner');
+    banner.style.transition = 'transform 0.25s ease';
+    banner.style.transform = 'translateY(100%)';
+    if (!accepted) {
+        (window.adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = 1;
+    }
+}
+</script>
+</body>
+</html>

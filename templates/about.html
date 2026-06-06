@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About – TranscriptFlow</title>
+    <meta name="description" content="Learn about TranscriptFlow, the free YouTube transcript extractor and AI summarizer built to make video content more accessible.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161e;
+            --surface2: #1a1e29;
+            --border: #252836;
+            --accent: #f0c040;
+            --text: #e8eaf0;
+            --text-muted: #6b7280;
+            --text-soft: #9ca3af;
+            --green: #34d399;
+            --radius: 14px;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+        header {
+            padding: 32px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: var(--font-head);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo span { color: var(--accent); }
+        .back-link {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        .ad-banner {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 28px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ad-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* Hero */
+        .about-hero {
+            padding: 20px 0 40px;
+        }
+        .about-hero h1 {
+            font-family: var(--font-head);
+            font-size: clamp(32px, 6vw, 50px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .about-hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+        .about-hero p {
+            font-size: 16px;
+            color: var(--text-soft);
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 560px;
+        }
+
+        /* Mission card */
+        .mission-card {
+            background: linear-gradient(135deg, rgba(240,192,64,0.06), rgba(240,192,64,0.02));
+            border: 1px solid rgba(240,192,64,0.2);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .mission-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-family: var(--font-head);
+            font-size: 120px;
+            color: rgba(240,192,64,0.08);
+            line-height: 1;
+            pointer-events: none;
+        }
+        .mission-card p {
+            font-family: var(--font-head);
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text);
+            position: relative;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            font-family: var(--font-head);
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card h2::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 17px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        .card p {
+            font-size: 14px;
+            color: var(--text-soft);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+        .card p:last-child { margin-bottom: 0; }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 560px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+        .stat-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-num {
+            font-family: var(--font-head);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Tech stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .tech-item {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 13px;
+            color: var(--text-soft);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tech-item span { font-size: 16px; }
+
+        /* Values */
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 4px;
+        }
+        @media (max-width: 500px) { .values-grid { grid-template-columns: 1fr; } }
+        .value-item {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .value-item h4 {
+            font-family: var(--font-head);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .value-item p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* CTA */
+        .cta-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cta-card h2 {
+            font-family: var(--font-head);
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .cta-card p {
+            font-size: 14px;
+            color: var(--text-soft);
+            margin-bottom: 18px;
+        }
+        .btn-cta {
+            display: inline-block;
+            padding: 13px 28px;
+            background: var(--accent);
+            color: #000;
+            font-family: var(--font-head);
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-cta:hover { background: #ffd053; transform: translateY(-1px); }
+
+        footer {
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        footer p { font-size: 12px; color: var(--text-muted); }
+        footer a { color: var(--text-muted); text-decoration: none; font-size: 12px; }
+        footer a:hover { color: var(--accent); }
+        .footer-links { display: flex; gap: 16px; }
+        /* ── COOKIE BANNER ── */
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #1a1e29;
+    border-top: 1px solid #252836;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#cookie-banner.visible { transform: translateY(0); }
+.cookie-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.55;
+    flex: 1;
+    min-width: 200px;
+}
+.cookie-text a { color: var(--accent); text-decoration: none; }
+.cookie-text a:hover { text-decoration: underline; }
+.cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-cookie-accept {
+    padding: 9px 20px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-cookie-accept:hover { background: #ffd053; }
+.btn-cookie-decline {
+    padding: 9px 16px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-cookie-decline:hover { border-color: var(--text-soft); color: var(--text-soft); }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <header>
+        <a href="/" class="logo">Transcript<span>Flow</span></a>
+        <a href="/" class="back-link">← Back to Tool</a>
+    </header>
+
+    <!-- Ad Slot: Top Banner -->
+    <div class="ad-banner">
+        <div>
+            <span class="ad-label">Advertisement</span>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="about-hero">
+        <h1>Built to make video<br><em>text accessible.</em></h1>
+        <p>TranscriptFlow is a free, independent web tool that extracts YouTube transcripts instantly — no sign-up, no paywalls, no fuss.</p>
+    </div>
+
+    <!-- Mission -->
+    <div class="mission-card">
+        <p>Video content shouldn't be locked away from people who learn by reading, need accessibility support, or just want to search what was said. We built TranscriptFlow to change that — one transcript at a time.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat-box">
+            <div class="stat-num">10+</div>
+            <div class="stat-label">Languages supported</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Summary styles</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Free to use</div>
+        </div>
+    </div>
+
+    <!-- Story -->
+    <div class="card">
+        <h2>Our Story</h2>
+        <p>TranscriptFlow started as a personal project — a simple script to pull captions from YouTube videos for note-taking and research. After realizing how useful it was for saving time, improving accessibility, and making content searchable, we decided to build it into a proper tool anyone could use.</p>
+        <p>Today, TranscriptFlow lets you pull free captions in seconds, use AI to transcribe any video without subtitles, and summarize even hour-long videos into concise notes — all for free, right in your browser.</p>
+        <!-- CUSTOMIZE: Replace the above with your own story if you'd like -->
+    </div>
+
+    <!-- Values -->
+    <div class="card">
+        <h2>What We Stand For</h2>
+        <div class="values-grid">
+            <div class="value-item">
+                <h4>🔓 Free Access</h4>
+                <p>Core transcript extraction is and always will be free. We believe information access shouldn't have a price tag.</p>
+            </div>
+            <div class="value-item">
+                <h4>♿ Accessibility</h4>
+                <p>Transcripts make video content usable for people who are deaf, hard of hearing, or simply prefer reading.</p>
+            </div>
+            <div class="value-item">
+                <h4>🔒 Privacy First</h4>
+                <p>We don't store your transcripts or URLs. Your content stays yours — we're just the pipe.</p>
+            </div>
+            <div class="value-item">
+                <h4>⚡ Speed</h4>
+                <p>No login walls, no setup. Paste a URL, get a transcript. That's it.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="card">
+        <h2>How It's Built</h2>
+        <p>TranscriptFlow is an independent project powered by a combination of open-source libraries and best-in-class AI APIs:</p>
+        <div class="tech-grid">
+            <div class="tech-item"><span>🐍</span> Python / Flask</div>
+            <div class="tech-item"><span>🎙</span> Deepgram AI</div>
+            <div class="tech-item"><span>✨</span> Google Gemini</div>
+            <div class="tech-item"><span>📺</span> YouTube API</div>
+            <div class="tech-item"><span>🎵</span> yt-dlp</div>
+            <div class="tech-item"><span>🌐</span> Vanilla JS</div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+        <h2>Ready to extract a transcript?</h2>
+        <p>Paste any YouTube URL and get started in seconds — completely free.</p>
+        <a href="/" class="btn-cta">Try TranscriptFlow →</a>
+    </div>
+
+    <footer>
+        <p>© 2025 TranscriptFlow · Free YouTube Transcript Extractor</p>
+        <div class="footer-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/contact">Contact</a>
+            <a href="/about">About</a>
+        </div>
+    </footer>
+
+</div>
+<div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+    <p class="cookie-text">
+        🍪 We use cookies to serve relevant ads via Google AdSense and to understand site usage.
+        By clicking <strong>Accept</strong>, you agree to our <a href="/privacy">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+        <button class="btn-cookie-decline" onclick="cookieChoice(false)">Decline</button>
+        <button class="btn-cookie-accept" onclick="cookieChoice(true)">Accept</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    if (localStorage.getItem('cookie_consent') === null) {
+        setTimeout(function() {
+            document.getElementById('cookie-banner').classList.add('visible');
+        }, 800);
+    }
+})();
+
+function cookieChoice(accepted) {
+    localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'declined');
+    var banner = document.getElementById('cookie-banner');
+    banner.style.transition = 'transform 0.25s ease';
+    banner.style.transform = 'translateY(100%)';
+    if (!accepted) {
+        (window.adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = 1;
+    }
+}
+</script>
+</body>
+</html>
