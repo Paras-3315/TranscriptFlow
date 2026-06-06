@@ -413,7 +413,7 @@
                     <div class="info-icon">📬</div>
                     <div class="info-text">
                         <strong>Email</strong>
-                        <p>support@transcriptflow.com</p>
+                        <p>transcriptflowsupport@gmail.com</p>
                     </div>
                 </div>
                 <div class="info-item">
@@ -454,56 +454,55 @@
 
 <script>
     async function submitForm() {
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value.trim();
-        const btn = document.getElementById('submitBtn');
-        const successBox = document.getElementById('successBox');
-        const errorBox = document.getElementById('errorBox');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+    const btn = document.getElementById('submitBtn');
+    const successBox = document.getElementById('successBox');
+    const errorBox = document.getElementById('errorBox');
 
-        errorBox.style.display = 'none';
-        successBox.style.display = 'none';
+    errorBox.style.display = 'none';
+    successBox.style.display = 'none';
 
-        if (!name || !email || !message) {
-            errorBox.textContent = 'Please fill in all required fields.';
-            errorBox.style.display = 'block';
-            return;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            errorBox.textContent = 'Please enter a valid email address.';
-            errorBox.style.display = 'block';
-            return;
-        }
-
-        btn.innerHTML = '<span class="spinner"></span> Sending…';
-        btn.disabled = true;
-
-        try {
-            const res = await fetch('/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, subject, message })
-            });
-            const data = await res.json();
-
-            if (!res.ok) throw new Error(data.error || 'Failed to send message.');
-
-            successBox.style.display = 'block';
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('subject').value = '';
-            document.getElementById('message').value = '';
-        } catch (err) {
-            errorBox.textContent = err.message;
-            errorBox.style.display = 'block';
-        } finally {
-            btn.innerHTML = 'Send Message';
-            btn.disabled = false;
-        }
+    if (!name || !email || !message) {
+        errorBox.textContent = 'Please fill in all required fields.';
+        errorBox.style.display = 'block';
+        return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        errorBox.textContent = 'Please enter a valid email address.';
+        errorBox.style.display = 'block';
+        return;
+    }
+
+    btn.innerHTML = '<span class="spinner"></span> Sending…';
+    btn.disabled = true;
+
+    try {
+        const res = await fetch('https://formspree.io/f/mykakrqo', {  // ← paste your endpoint here
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, subject, message })
+        });
+
+        if (!res.ok) throw new Error('Failed to send.');
+
+        successBox.style.display = 'block';
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('subject').value = '';
+        document.getElementById('message').value = '';
+    } catch (err) {
+        errorBox.textContent = 'Something went wrong. Please try again.';
+        errorBox.style.display = 'block';
+    } finally {
+        btn.innerHTML = 'Send Message';
+        btn.disabled = false;
+    }
+}
 </script>
 <div id="cookie-banner" role="dialog" aria-label="Cookie consent">
     <p class="cookie-text">
