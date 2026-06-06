@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, Response
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import TranscriptsDisabled, NoTranscriptFound, VideoUnavailable
+from youtube_transcript_api.proxies import WebshareProxyConfig
 import yt_dlp
 import re
 import os
@@ -21,15 +22,17 @@ SITE_URL = "https://transcriptflow.onrender.com"
 # ── PROXY CONFIG (WebShare) ──────────────────────────────────
 PROXY_USER = os.getenv('PROXY_USER')
 PROXY_PASS = os.getenv('PROXY_PASS')
-PROXY_HOST = os.getenv('PROXY_HOST')
-PROXY_PORT = os.getenv('PROXY_PORT')
 
-def get_proxies():
-    """Returns proxy dict if all env vars are set, otherwise None."""
-    if all([PROXY_USER, PROXY_PASS, PROXY_HOST, PROXY_PORT]):
-        proxy_url = f"http://{PROXY_USER}:{PROXY_PASS}@{PROXY_HOST}:{PROXY_PORT}"
-        return {"http": proxy_url, "https": proxy_url}
-    return None
+def get_api():
+    """Returns YouTubeTranscriptApi instance, with WebShare proxy if configured."""
+    if all([PROXY_USER, PROXY_PASS]):
+        return YouTubeTranscriptApi(
+            proxy_config=WebshareProxyConfig(
+                proxy_username=PROXY_USER,
+                proxy_password=PROXY_PASS,
+            )
+        )
+    return YouTubeTranscriptApi()
 
 try:
     gemini_client = genai.Client()
@@ -155,8 +158,7 @@ def get_transcript():
             return jsonify({'error': f'AI Transcription failed: {str(e)}'}), 500
 
     try:
-        proxies = get_proxies()
-        api = YouTubeTranscriptApi(proxies=proxies) if proxies else YouTubeTranscriptApi()
+        api = get_api()
 
         transcript_list = api.list(video_id)
         try:
