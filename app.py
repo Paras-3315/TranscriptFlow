@@ -18,6 +18,19 @@ DEEPGRAM_API_KEY = "6042e3078f93ae237b8fca62f0e61628645adbaa"
 # Replace with your actual deployed domain
 SITE_URL = "https://transcriptflow.onrender.com"
 
+# ── PROXY CONFIG (WebShare) ──────────────────────────────────
+PROXY_USER = os.getenv('PROXY_USER')
+PROXY_PASS = os.getenv('PROXY_PASS')
+PROXY_HOST = os.getenv('PROXY_HOST')
+PROXY_PORT = os.getenv('PROXY_PORT')
+
+def get_proxies():
+    """Returns proxy dict if all env vars are set, otherwise None."""
+    if all([PROXY_USER, PROXY_PASS, PROXY_HOST, PROXY_PORT]):
+        proxy_url = f"http://{PROXY_USER}:{PROXY_PASS}@{PROXY_HOST}:{PROXY_PORT}"
+        return {"http": proxy_url, "https": proxy_url}
+    return None
+
 try:
     gemini_client = genai.Client()
 except Exception:
@@ -142,7 +155,9 @@ def get_transcript():
             return jsonify({'error': f'AI Transcription failed: {str(e)}'}), 500
 
     try:
-        api = YouTubeTranscriptApi()
+        proxies = get_proxies()
+        api = YouTubeTranscriptApi(proxies=proxies) if proxies else YouTubeTranscriptApi()
+
         transcript_list = api.list(video_id)
         try:
             transcript = transcript_list.find_transcript(['en', 'es', 'hi', 'fr', 'de', 'ja', 'pt', 'ru', 'ko', 'zh'])
@@ -214,7 +229,6 @@ def contact_submit():
     message = data.get('message', '').strip()
     if not name or not email or not message:
         return jsonify({'error': 'All fields are required.'}), 400
-    # TODO: Hook up to SendGrid / Mailgun to actually send emails
     return jsonify({'success': True, 'message': "Thanks! We'll get back to you within 48 hours."})
 
 
