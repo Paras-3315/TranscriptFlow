@@ -16,7 +16,7 @@ app = Flask(__name__)
 DEEPGRAM_API_KEY = "6042e3078f93ae237b8fca62f0e61628645adbaa"
 
 # Replace with your actual deployed domain
-SITE_URL = "https://www.transcriptflow.com"
+SITE_URL = "https://transcriptflow.onrender.com"
 
 try:
     gemini_client = genai.Client()
