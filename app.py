@@ -137,7 +137,10 @@ Sitemap: {SITE_URL}/sitemap.xml
 """
     return Response(content, mimetype='text/plain')
 
-
+from flask import send_from_directory
+@app.route('/google2b114fd69e444081.html')
+def google_verification():
+    return send_from_directory('static', 'google2b114fd69e444081.html')
 # ── API ROUTES ────────────────────────────────────────────────
 
 @app.route('/get-transcript', methods=['POST'])
